@@ -7,12 +7,27 @@
 
 import Foundation
 
-class LinkedList<T: Equatable> {
+class LinkedList<T: Equatable>: Sequence {
     var head: Node<T>?
     var tail: Node<T>?
     
-    init(head: Node<T>?) {
-        self.head = head
+    init(value: T?) {
+        self.head =  value != nil ? Node(value: value!) : nil
+    }
+    
+//    func makeIterator() -> some IteratorProtocol {
+//        return
+//    }
+    
+    func makeIterator() -> AnyIterator<Node<T>> {
+        // set up the initial head value
+        var current : Node? = head
+        return AnyIterator<Node> { () -> Node<T>? in
+            // before we leave the current scope move to the next value in the List
+            defer { current = current?.next }
+            // return the current value
+            return current
+        }
     }
     
     // Inserts a new node at the head
@@ -28,7 +43,9 @@ class LinkedList<T: Equatable> {
     }
     
     // Add's a node to the end or aka tail
-    func append(node: Node<T>) {
+    func append(value: T) {
+        
+        let node = Node(value: value)
         // Check the head node
         if head == nil {
             head = node
@@ -93,6 +110,8 @@ class LinkedList<T: Equatable> {
         var currentNode = head
         var previousNode: Node<T>?
         
+        for element in 
+        
         while currentNode?.next != nil {
             if currentPosition == position {
                 previousNode?.next = currentNode?.next
@@ -136,13 +155,17 @@ class LinkedList<T: Equatable> {
     
 //    Create a linked list, reverse it, and print out the result.
     
-    func reverseList() -> LinkedList<T> {
+    func reverseList() -> LinkedList<T>? {
         
-        var tempList: LinkedList<T> = self // 1, 2, 3, 10
-        var reversedList = LinkedList<T>(head: nil)
+        let tempList: LinkedList<T> = self // 1, 2, 3, 10
+        let reversedList = LinkedList<T>(value: nil)
         
         var currentNode = tempList.head
         var prev: Node<T>?
+        
+        for node in tempList {
+            
+        }
         
         while currentNode?.next != nil   {
             if let value = currentNode?.value {
